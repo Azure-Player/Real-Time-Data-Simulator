@@ -1,0 +1,117 @@
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "BIOMASS",
+  "Generation": {{$new Random().Next(911,2320)}}
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "CCGT",
+  "Generation": {{$new Random().Next(1749,6144)}}
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "COAL",
+  "Generation": 0
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "INTELEC",
+  "Generation": {{$new Random().Next(806,999)}}
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "INTEW",
+  "Generation": {{$new Random().Next(-530,177)}}
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "INTFR",
+  "Generation": {{$new Random().Next(805,1507)}}
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "INTIFA2",
+  "Generation": {{$new Random().Next(865,992)}}
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "INTIRL",
+  "Generation": {{$new Random().Next(-451,273)}}
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "INTNED",
+  "Generation": {{$new Random().Next(-1016,838)}}
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "INTNEM",
+  "Generation": {{$new Random().Next(-1024,894)}}
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "INTNSL",
+  "Generation": {{$new Random().Next(0,1400)}}
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "INTVKL",
+  "Generation": {{$new Random().Next(-1100,1419)}}
+}
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "INTVKL",
+  "Generation": {{$new Random().Next(60,418)}}
+}

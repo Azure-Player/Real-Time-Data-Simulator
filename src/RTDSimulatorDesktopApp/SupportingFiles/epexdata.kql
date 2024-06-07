@@ -1,0 +1,14 @@
+.create table epexdata ( 
+Executed_At_UTC: string,
+Executed_At_Milliseconds: int,
+Trade_ID: int,
+Public_Own: string,
+Revision: int,
+Contract_ID: int,
+Quantity: double,
+Price: double,
+Product_Name: string,
+EventProcessedUtcTime:datetime,
+PartitionId:int,
+EventEnqueuedUtcTime:datetime
+)
