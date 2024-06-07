@@ -1,0 +1,66 @@
+.create table GenerationByFuelType ( 
+Dataset:string, 
+PublishTime:datetime,
+StartTime:datetime,
+SettlementDate:string,
+SettlementPeriod:int,
+FuelType:string,
+Generation:int,
+EventProcessedUtcTime:datetime,
+PartitionId:int,
+EventEnqueuedUtcTime:datetime
+)
+
+
+{
+  "Dataset": "FUELINST",
+  "PublishTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "StartTime": "{{$DateTime.Now.AddSeconds(-5).ToString("s")+"Z"}}",
+  "SettlementDate": "{{$DateTime.Now.ToString("dd/MM/yyyy")}}",
+  "SettlementPeriod": {{$DateTime.Now.Hour*2+Math.Floor(DateTime.Now.Minute/30d)+1}},
+  "FuelType": "{{FuelType(MessageIndex)}}",
+  "Generation": {{$new Random().Next(805,950)}}
+}
+
+DateTime.Now.Hour*2 + Math.Floor(DateTime.Now.Minute / 30d) + 1
+
+
+
+//***********************************************************************************************************
+// Here are two articles to help you get started with KQL:
+// KQL reference guide - https://aka.ms/KQLguide
+// SQL - KQL conversions - https://aka.ms/sqlcheatsheet
+//***********************************************************************************************************
+
+// Use "take" to view a sample number of records in the table and check the data.
+GenerationByFuelType
+| take 100
+
+// See how many records are in the table.
+GenerationByFuelType
+| count
+
+// This query returns the number of ingestions per hour in the given table.
+GenerationByFuelType
+| summarize IngestionCount = count() by bin(ingestion_time(), 1h)
+
+
+// Use 'take' to view a sample number of records in the table and check the data.
+GenerationByFuelType
+| take 100
+
+// See the most recent data - records ingested in the last 20 minutes.
+GenerationByFuelType
+| where ingestion_time() between (now(-20m) .. now())
+
+GenerationByFuelType
+| where ingestion_time() between (now(-20m) .. now())
+| project StartTime, SettlementPeriod, SettlementDate, FuelType, Generation
+
+
+
+// Give me data for last 10 minutes based on StartTime and select only StartTime, FuelTime and Generation columns.
+//
+GenerationByFuelType
+| where StartTime > ago(10m)
+| project StartTime, FuelType, Generation

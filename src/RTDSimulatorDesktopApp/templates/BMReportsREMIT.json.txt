@@ -1,0 +1,13 @@
+{
+  "synchronous_grid_name": "GB",
+  "detectionTimestamp": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "startTime": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "endTime": "{{$DateTime.Now.AddSeconds(3).ToString("s")+"Z"}}",
+  "EventClass": "interconnector",
+  "EventSizeMW": -1014,
+  "Source": "I_IEG-IFA2",
+  "Comments": "",
+  "publicationTimestamp": "{{$DateTime.Now.ToString("s")+"Z"}}",
+  "publicationType": "BMReportsREMIT",
+  "publicationURL": "https://bmrs.elexon.co.uk/remit/details/IFA202303290734G-ELXP-RMT-00000209?messageId=725409"
+}

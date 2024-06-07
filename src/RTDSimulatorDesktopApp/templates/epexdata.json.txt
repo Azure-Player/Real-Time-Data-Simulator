@@ -1,0 +1,11 @@
+{
+  "Executed_At_UTC": "GB",
+  "Executed_At_Milliseconds": 120,
+  "Trade_ID": 1674000001,
+  "Public_Own": "Public",
+  "Revision": 1,
+  "Contract_ID": 13600000,
+  "Quantity": {{$new Random().Next(1,400)/10d}},
+  "Price": {{$new Random().Next(-730,731)/10d}},
+  "Product_Name": "GB_Half_Hour_Power"
+}
