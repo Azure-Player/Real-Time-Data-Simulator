@@ -19,3 +19,4 @@ Windows Desktop application to generate and stream data into EventHub.
 
 # References
 [Get a custom endpoint without creating an EventHub for EventStreams](https://www.youtube.com/watch?v=ftb2nN3eukg)
+Similar project: [Mockingbird](https://www.tinybird.co/blog-posts/mockingbird-announcement-mock-data-generator)
