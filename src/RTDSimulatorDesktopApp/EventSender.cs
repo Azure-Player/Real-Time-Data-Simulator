@@ -40,7 +40,7 @@ namespace RTDSimulatorDesktopApp
             Variables.Add("ProductId", "Random(700,999)");
             Variables.Add("Device", "RandomItem(mobile|tablet|pc)");
             Variables.Add("DateTime.Now", "$DateTime.Now");
-            //Variables.Add("FuelType(MessageIndex)", "BIOMASS|CCGT|COAL|INTELEC|INTEW|INTFR|INTIFA2|INTIRL|INTNED|INTNEM|INTNSL|INTVKL|NPSHYD|NUCLEAR|OCGT|OIL|OTHER|PS|WIND");
+            Variables.Add("FuelType(MessageIndex)", "BIOMASS|CCGT|COAL|INTELEC|INTEW|INTFR|INTIFA2|INTIRL|INTNED|INTNEM|INTNSL|INTVKL|NPSHYD|NUCLEAR|OCGT|OIL|OTHER|PS|WIND");
             Variables.Add("SettlementPeriod", "48");
 
             // Finding expressions...
@@ -112,11 +112,11 @@ namespace RTDSimulatorDesktopApp
                     int i = rnd.Next(0, arr.Length);
                     val = arr[i];
                 }
-                //if (key == "FuelType(MessageIndex)")
-                //{
-                //    String[] arr = val.Split("|");
-                //    val = arr[msgIndex];
-                //}
+                if (key == "FuelType(MessageIndex)")
+                {
+                    String[] arr = val.Split("|");
+                    val = arr[msgIndex];
+                }
                 payload = payload.Replace("{{" + v.Key + "}}", val);
             }
 
