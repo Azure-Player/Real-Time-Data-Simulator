@@ -25,13 +25,12 @@ Format of a variable: `{{VariableName}}`
 The following examples depict predefined Variables you can use as Tokens:
 |Variable | Generates |
 |--|--|
-| {{UserId}} | Numeric (int) value from range 5000-5100 |
-| {{ProductId}} | Numeric (int) value from range 700-999 |
-| {{Device}} | Random item from array of: mobile,tablet,pc |
-| {{DateTime.Now}} | Current date & time (now) in [round-trip ("O") format](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip).  |
-| {{FuelType(MessageIndex)}} | Value selected on `MessageIndex` from list: BIOMASS,CCGT,COAL,INTELEC,INTEW,INTFR,INTIFA2,INTIRL,INTNED,INTNEM,INTNSL,INTVKL,NPSHYD,NUCLEAR,OCGT,OIL,OTHER,PS,WIND
- |
-| {{SettlementPeriod}} | Hardcoded Int value: `48` |
+| `{{UserId}}` | Numeric (int) value from range 5000-5100 |
+| `{{ProductId}}` | Numeric (int) value from range 700-999 |
+| `{{Device}}` | Random item from array of: mobile,tablet,pc |
+| `{{DateTime.Now}}` | Current date & time (now) in [round-trip ("O") format](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip).  |
+| `{{FuelType(MessageIndex)}}` | Value selected on `MessageIndex` from list: BIOMASS,CCGT,COAL,INTELEC,INTEW,INTFR,INTIFA2,INTIRL,INTNED,INTNEM,INTNSL,INTVKL,NPSHYD,NUCLEAR,OCGT,OIL,OTHER,PS,WIND |
+| `{{SettlementPeriod}}` | Hardcoded Int value: `48` |
 
 ## C# Expressions
 Format of an expression: `{{$Expression}}`  
