@@ -115,7 +115,8 @@ namespace RTDSimulatorDesktopApp
                 if (key == "FuelType(MessageIndex)")
                 {
                     String[] arr = val.Split("|");
-                    val = arr[msgIndex];
+                    int i = msgIndex % arr.Length; // iterate through fuel types
+                    val = arr[i];
                 }
                 payload = payload.Replace("{{" + v.Key + "}}", val);
             }
