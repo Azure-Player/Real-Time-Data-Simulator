@@ -139,7 +139,7 @@
             btnRun.TabIndex = 6;
             btnRun.Text = "RUN";
             btnRun.UseVisualStyleBackColor = true;
-            btnRun.Click += btnRun_Click;
+            btnRun.Click += async (sender, e) => await btnRun_Click(sender, e);
             // 
             // progressBar1
             // 
