@@ -19,7 +19,6 @@ namespace RTDSimulatorDesktopApp
         private int _MsgSent = 0;
         private DateTime _StartTime = DateTime.MinValue;
         private DateTime _EndTime = DateTime.MinValue;
-        private Object _uiLocker = new object();
 
         public bool IsPayloadChanged
         {
