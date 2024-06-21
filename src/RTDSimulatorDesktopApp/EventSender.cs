@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -27,7 +29,11 @@ namespace RTDSimulatorDesktopApp
         string _payload = "";
         string _connectionString = "sb://";
         string _eventHubName = "es_";
+
+        private Lazy<EventHubProducerClient> _producerClient;
+
         private Dictionary<string, string> Expressions = new Dictionary<string, string>();
+        private ConcurrentDictionary<string, Script<Object>> preCompiledScripts { get; set; } = new ConcurrentDictionary<string, Script<Object>>();
 
         public EventSender(string connectionString, string EventhubName, string payload)
         {
@@ -54,40 +60,46 @@ namespace RTDSimulatorDesktopApp
                     Expressions.Add(m.Value, m.Value.Substring(3, m.Value.Length - 5));
                 }
             }
+
+            _producerClient = new Lazy<EventHubProducerClient>(() => new EventHubProducerClient(_connectionString, _eventHubName));
         }
 
+        ~EventSender()
+        {
+            if( _producerClient.IsValueCreated)
+            {
+                _producerClient.Value.DisposeAsync().GetAwaiter().GetResult();
+            }
+        }
 
-        public async void Send()
+        public async Task Send()
         {
             DateTime nextRun = DateTime.Now;
             for (int batch = 0; batch < BatchesNo; batch++)
             {
-                await using (var producerClient = new EventHubProducerClient(_connectionString, _eventHubName))
+                using EventDataBatch eventBatch = await _producerClient.Value.CreateBatchAsync();
+                for (int m = 0; m < EventsPerBatch; m++)
                 {
-                    using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
-                    for (int m = 0; m < EventsPerBatch; m++)
-                    {
-                        string payload = GetPayload(m);
-                        eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes(payload)));
-                        messagesCount++;
-                    }
-                    SleepUntil(nextRun);
-                    await producerClient.SendAsync(eventBatch);
-                    OnBatchSent(this, new EventArgs());
+                    string payload = await GetPayload(m);
+                    eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes(payload)));
+                    messagesCount++;
                 }
+                await SleepUntil(nextRun);
+                await _producerClient.Value.SendAsync(eventBatch);
+                OnBatchSent(this, new EventArgs());
+
                 nextRun = DateTime.Now.Add(this.WaitTime);   //Thread.Sleep(WaitTime);
             }
-            OnCompleted(this, new EventArgs());
         }
 
-        private void SleepUntil(DateTime t)
+        private async Task SleepUntil(DateTime t)
         {
             TimeSpan waitTime = t.Subtract(DateTime.Now);
             if (waitTime <= TimeSpan.Zero) return;
-            Thread.Sleep(waitTime);
+            await Task.Delay(waitTime);
         }
 
-        public string GetPayload(int msgIndex)
+        public async Task<string> GetPayload(int msgIndex)
         {
             Random rnd = new Random();
             string payload = _payload;
@@ -125,14 +137,22 @@ namespace RTDSimulatorDesktopApp
             // https://github.com/dotnet/roslyn/blob/main/docs/wiki/Scripting-API-Samples.md
             foreach (string key in Expressions.Keys) {
                 String exp = Expressions[key];
-                var eval = CSharpScript.EvaluateAsync(exp, ScriptOptions.Default.WithImports("System"));
-                payload = payload.Replace(key, eval.Result.ToString());
+
+                if(!preCompiledScripts.TryGetValue(exp, out Script<Object> script))
+                {
+                    script = CSharpScript.Create(exp, ScriptOptions.Default.WithImports("System"));
+                    preCompiledScripts.TryAdd(exp, script);
+                }
+
+                var result = await script.RunAsync();
+
+                payload = payload.Replace(key, result.ReturnValue.ToString());
             }
+
             return payload;
         }
 
         public event EventHandler OnBatchSent;
-        public event EventHandler OnCompleted;
 
 
 

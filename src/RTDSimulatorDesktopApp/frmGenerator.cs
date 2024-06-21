@@ -19,6 +19,7 @@ namespace RTDSimulatorDesktopApp
         private int _MsgSent = 0;
         private DateTime _StartTime = DateTime.MinValue;
         private DateTime _EndTime = DateTime.MinValue;
+        private Object _uiLocker = new object();
 
         public bool IsPayloadChanged
         {
@@ -31,7 +32,7 @@ namespace RTDSimulatorDesktopApp
         }
 
 
-        private void btnRun_Click(object sender, EventArgs e)
+        private async Task btnRun_Click(object sender, EventArgs e)
         {
             btnRun.Enabled = false;
             status.Text = "Status: In Progress...";
@@ -42,19 +43,36 @@ namespace RTDSimulatorDesktopApp
             _MsgSent = 0;
             _StartTime = DateTime.Now;
 
+            List<Task> sendTasks = new List<Task>();
+
+            EventSender s = new EventSender(txtCnnStr.Text, txtEventHubName.Text, txtPayload.Text);
+            s.OnBatchSent += EventSender_OnBatchSent;
+
             for (int i = 0; i < this.SettingsThreadsNumber.Value; i++)
             {
-                EventSender s = new EventSender(txtCnnStr.Text, txtEventHubName.Text, txtPayload.Text);
                 s.BatchesNo = (int)SettingsBatchesPerThreadNumber.Value;
                 s.EventsPerBatch = (int)SettingsMsgPerBatchNumber.Value;
                 s.WaitTime = new TimeSpan(0, 0, (int)SettingsWaitTimeSec.Value);
-                s.OnBatchSent += EventSender_OnBatchSent;
-                s.OnCompleted += EventSender_OnCompleted;
-                s.Send();
+                sendTasks.Add(s.Send());
             }
+
+            try
+            {
+                await Task.WhenAll(sendTasks);
+                EventSender_OnCompleted();
+            }
+            catch (Exception ex)
+            {
+                //We only catch first exception here - but can access each task's exception seperately if needed (e.g. display failed thread etc)
+                var allExceptions = sendTasks.Where(x => x.Exception != null).Select(x => x.Exception);
+
+                //Consider adding some handling of these exceptions
+                throw;
+            }
+
         }
 
-        private void EventSender_OnCompleted(object? sender, EventArgs e)
+        private void EventSender_OnCompleted()//(object? sender, EventArgs e)
         {
             progressBar1.Maximum = progressBar1.Value;
             _EndTime = DateTime.Now;
@@ -154,7 +172,7 @@ namespace RTDSimulatorDesktopApp
         private void btnPreview_Click(object sender, EventArgs e)
         {
             EventSender s = new EventSender("", "", txtPayload.Text);
-            String ExamplePayload = s.GetPayload(0);
+            String ExamplePayload = s.GetPayload(0).ConfigureAwait(false).GetAwaiter().GetResult();
             frmPreview f = new frmPreview();
             f.txtPayload.Text = ExamplePayload;
             f.ShowDialog();
