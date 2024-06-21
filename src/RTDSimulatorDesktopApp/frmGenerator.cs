@@ -71,7 +71,7 @@ namespace RTDSimulatorDesktopApp
 
         }
 
-        private void EventSender_OnCompleted()//(object? sender, EventArgs e)
+        private void EventSender_OnCompleted()
         {
             progressBar1.Maximum = progressBar1.Value;
             _EndTime = DateTime.Now;
