@@ -1,4 +1,6 @@
-﻿namespace RTDSimulatorDesktopApp
+﻿using RTDSimulatorDesktopApp.FormControls;
+
+namespace RTDSimulatorDesktopApp
 {
     partial class frmGenerator
     {
@@ -36,7 +38,7 @@
             label3 = new Label();
             txtPayload = new TextBox();
             btnRun = new Button();
-            progressBar1 = new ProgressBar();
+            progressBar1 = new NewProgressBar();
             label4 = new Label();
             groupBox1 = new GroupBox();
             label9 = new Label();
@@ -59,6 +61,9 @@
             exitToolStripMenuItem = new ToolStripMenuItem();
             groupBox2 = new GroupBox();
             btnPreview = new Button();
+            buttonCancel = new Button();
+            lastErrorTextBox = new TextBox();
+            groupBox3 = new GroupBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)SettingsWaitTimeSec).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SettingsTotalMsgCount).BeginInit();
@@ -68,6 +73,7 @@
             statusStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
             groupBox2.SuspendLayout();
+            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -123,7 +129,7 @@
             txtPayload.Multiline = true;
             txtPayload.Name = "txtPayload";
             txtPayload.ScrollBars = ScrollBars.Both;
-            txtPayload.Size = new Size(599, 509);
+            txtPayload.Size = new Size(599, 490);
             txtPayload.TabIndex = 5;
             txtPayload.Text = resources.GetString("txtPayload.Text");
             txtPayload.WordWrap = false;
@@ -133,21 +139,23 @@
             // 
             btnRun.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnRun.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnRun.Location = new Point(911, 525);
+            btnRun.Location = new Point(900, 515);
             btnRun.Name = "btnRun";
-            btnRun.Size = new Size(201, 63);
+            btnRun.Size = new Size(201, 54);
             btnRun.TabIndex = 6;
             btnRun.Text = "RUN";
             btnRun.UseVisualStyleBackColor = true;
-            btnRun.Click += async (sender, e) => await btnRun_Click(sender, e);
+            btnRun.Click += btnRun_Click;
             // 
             // progressBar1
             // 
-            progressBar1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            progressBar1.Location = new Point(15, 603);
+            progressBar1.Dock = DockStyle.Bottom;
+            progressBar1.ForeColor = Color.LawnGreen;
+            progressBar1.Location = new Point(3, 64);
+            progressBar1.Margin = new Padding(15, 3, 15, 3);
             progressBar1.Maximum = 1000;
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(1097, 43);
+            progressBar1.Size = new Size(1094, 43);
             progressBar1.TabIndex = 7;
             // 
             // label4
@@ -263,7 +271,7 @@
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
             statusStrip1.Items.AddRange(new ToolStripItem[] { statusBatches, status, statusTime });
-            statusStrip1.Location = new Point(0, 659);
+            statusStrip1.Location = new Point(0, 685);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1124, 22);
             statusStrip1.TabIndex = 10;
@@ -365,20 +373,58 @@
             btnPreview.UseVisualStyleBackColor = true;
             btnPreview.Click += btnPreview_Click;
             // 
+            // buttonCancel
+            // 
+            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonCancel.Enabled = false;
+            buttonCancel.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonCancel.Location = new Point(693, 515);
+            buttonCancel.Name = "buttonCancel";
+            buttonCancel.Size = new Size(201, 54);
+            buttonCancel.TabIndex = 14;
+            buttonCancel.Text = "CANCEL";
+            buttonCancel.UseVisualStyleBackColor = true;
+            buttonCancel.Click += buttonCancel_Click;
+            // 
+            // lastErrorTextBox
+            // 
+            lastErrorTextBox.Dock = DockStyle.Top;
+            lastErrorTextBox.Location = new Point(3, 19);
+            lastErrorTextBox.Multiline = true;
+            lastErrorTextBox.Name = "lastErrorTextBox";
+            lastErrorTextBox.ReadOnly = true;
+            lastErrorTextBox.ScrollBars = ScrollBars.Vertical;
+            lastErrorTextBox.Size = new Size(1094, 45);
+            lastErrorTextBox.TabIndex = 4;
+            lastErrorTextBox.WordWrap = true;
+            // 
+            // groupBox3
+            // 
+            groupBox3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox3.AutoSize = true;
+            groupBox3.Controls.Add(lastErrorTextBox);
+            groupBox3.Controls.Add(progressBar1);
+            groupBox3.Location = new Point(12, 575);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(1100, 110);
+            groupBox3.TabIndex = 13;
+            groupBox3.TabStop = false;
+            // 
             // frmGenerator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1124, 681);
+            ClientSize = new Size(1124, 707);
+            Controls.Add(groupBox3);
+            Controls.Add(buttonCancel);
             Controls.Add(btnPreview);
             Controls.Add(groupBox2);
-            Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             Controls.Add(groupBox1);
-            Controls.Add(progressBar1);
             Controls.Add(btnRun);
             Controls.Add(txtPayload);
             Controls.Add(label3);
+            Controls.Add(statusStrip1);
             MainMenuStrip = menuStrip1;
             MinimumSize = new Size(1140, 718);
             Name = "frmGenerator";
@@ -399,6 +445,8 @@
             menuStrip1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -412,7 +460,6 @@
         private Label label3;
         private TextBox txtPayload;
         private Button btnRun;
-        private ProgressBar progressBar1;
         private Label label4;
         private GroupBox groupBox1;
         private NumericUpDown SettingsThreadsNumber;
@@ -435,5 +482,9 @@
         private NumericUpDown SettingsWaitTimeSec;
         private Label label8;
         private Button btnPreview;
+        private Button buttonCancel;
+        private NewProgressBar progressBar1;
+        private TextBox lastErrorTextBox;
+        private GroupBox groupBox3;
     }
 }
