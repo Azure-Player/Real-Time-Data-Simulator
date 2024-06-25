@@ -72,7 +72,7 @@ namespace RTDSimulatorDesktopApp
             }
         }
 
-        public async Task Send()
+        public async Task Send(CancellationToken cancellationToken)
         {
             DateTime nextRun = DateTime.Now;
             for (int batch = 0; batch < BatchesNo; batch++)
@@ -80,11 +80,19 @@ namespace RTDSimulatorDesktopApp
                 using EventDataBatch eventBatch = await _producerClient.Value.CreateBatchAsync();
                 for (int m = 0; m < EventsPerBatch; m++)
                 {
+                    if (cancellationToken.IsCancellationRequested)
+                        return;
+
                     string payload = await GetPayload(m);
                     eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes(payload)));
                     messagesCount++;
                 }
-                await SleepUntil(nextRun);
+
+                await SleepUntil(nextRun, cancellationToken);
+
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+
                 await _producerClient.Value.SendAsync(eventBatch);
                 OnBatchSent(this, new EventArgs());
 
@@ -92,11 +100,18 @@ namespace RTDSimulatorDesktopApp
             }
         }
 
-        private async Task SleepUntil(DateTime t)
+        private async Task SleepUntil(DateTime t, CancellationToken cancellationToken)
         {
             TimeSpan waitTime = t.Subtract(DateTime.Now);
             if (waitTime <= TimeSpan.Zero) return;
-            await Task.Delay(waitTime);
+            try
+            {
+                await Task.Delay(waitTime, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                //don't throw if cancelled
+            }
         }
 
         public async Task<string> GetPayload(int msgIndex)

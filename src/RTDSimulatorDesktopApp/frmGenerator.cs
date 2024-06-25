@@ -1,4 +1,7 @@
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using RTDSimulatorDesktopApp.FormControls;
+using System.Text;
 
 namespace RTDSimulatorDesktopApp
 {
@@ -19,6 +22,7 @@ namespace RTDSimulatorDesktopApp
         private int _MsgSent = 0;
         private DateTime _StartTime = DateTime.MinValue;
         private DateTime _EndTime = DateTime.MinValue;
+        private CancellationTokenSource _CancellationTokenSource;
 
         public bool IsPayloadChanged
         {
@@ -31,47 +35,65 @@ namespace RTDSimulatorDesktopApp
         }
 
 
-        private async Task btnRun_Click(object sender, EventArgs e)
+        private async void btnRun_Click(object sender, EventArgs e)
         {
+            RecalcTotal();
+            lastErrorTextBox.Text = "";
+            progressBar1.ForeColor = Color.LimeGreen;
+
             btnRun.Enabled = false;
-            status.Text = "Status: In Progress...";
-            statusTime.Text = "";
             progressBar1.Maximum = (int)_TotalBatchCount;
             progressBar1.Value = 0;
             _BatchSent = 0;
             _MsgSent = 0;
             _StartTime = DateTime.Now;
 
-            List<Task> sendTasks = new List<Task>();
+            statusBatches.Text = $"Batches sent: {_BatchSent} / {_TotalBatchCount}";
+            status.Text = "Status: In Progress...";
+            statusTime.Text = "";
+
+            List<(int, Task)> sendTasks = new List<(int, Task)>();
 
             EventSender s = new EventSender(txtCnnStr.Text, txtEventHubName.Text, txtPayload.Text);
             s.OnBatchSent += EventSender_OnBatchSent;
+            _CancellationTokenSource = new CancellationTokenSource();
 
             for (int i = 0; i < this.SettingsThreadsNumber.Value; i++)
             {
                 s.BatchesNo = (int)SettingsBatchesPerThreadNumber.Value;
                 s.EventsPerBatch = (int)SettingsMsgPerBatchNumber.Value;
                 s.WaitTime = new TimeSpan(0, 0, (int)SettingsWaitTimeSec.Value);
-                sendTasks.Add(s.Send());
+                sendTasks.Add((i, s.Send(_CancellationTokenSource.Token)));
             }
 
             try
             {
-                await Task.WhenAll(sendTasks);
-                EventSender_OnCompleted();
+                buttonCancel.Enabled = true;
+                await Task.WhenAll(sendTasks.Select(x => x.Item2));
+                if (_CancellationTokenSource.IsCancellationRequested)
+                {
+                    buttonCancel.Enabled = false;
+                    OnCancelled();
+                }
+                else
+                {
+                    buttonCancel.Enabled = false;
+                    OnCompleted();
+                }
             }
             catch (Exception ex)
             {
-                //We only catch first exception here - but can access each task's exception seperately if needed (e.g. display failed thread etc)
-                var allExceptions = sendTasks.Where(x => x.Exception != null).Select(x => x.Exception);
+                progressBar1.ForeColor = Color.Red;
+                var allExceptions = sendTasks.Where(x => x.Item2.Exception != null).Select(x => (x.Item1, x.Item2.Exception));
 
-                //Consider adding some handling of these exceptions
-                throw;
+                StringBuilder sb = new StringBuilder();
+                allExceptions.ToList().ForEach(x => sb.AppendLine($"Exception on thread {x.Item1}: {x.Exception?.Message ?? "Unknown exception occured during sending"}"));
+                OnFailed(sb.ToString());
             }
 
         }
 
-        private void EventSender_OnCompleted()
+        private void OnCompleted()
         {
             progressBar1.Maximum = progressBar1.Value;
             _EndTime = DateTime.Now;
@@ -79,6 +101,36 @@ namespace RTDSimulatorDesktopApp
             status.Text = $"Status: Completed.";
             statusTime.Text = $"Sent {_MsgSent} messages in {ts:c}";
             btnRun.Enabled = true;
+        }
+
+        private void OnCancelled()
+        {
+            if (progressBar1.Value == 0)
+            {
+                progressBar1.Value = 1;
+            }
+            progressBar1.Maximum = progressBar1.Value;
+            _EndTime = DateTime.Now;
+            TimeSpan ts = _EndTime - _StartTime;
+            status.Text = $"Status: Cancelled.";
+            statusTime.Text = $"Sent {_MsgSent} messages in {ts:c}";
+            btnRun.Enabled = true;
+        }
+
+        private void OnFailed(string errorMessage)
+        {
+            if (progressBar1.Value == 0)
+            {
+                progressBar1.Value = 1;
+            }
+            progressBar1.Maximum = progressBar1.Value;
+            _EndTime = DateTime.Now;
+            TimeSpan ts = _EndTime - _StartTime;
+            status.Text = $"Status: Failed.";
+            statusTime.Text = $"Sent {_MsgSent} messages in {ts:c}";
+            lastErrorTextBox.Text = errorMessage;
+            btnRun.Enabled = true;
+            buttonCancel.Enabled = false;
         }
 
         private void EventSender_OnBatchSent(object? sender, EventArgs e)
@@ -175,6 +227,13 @@ namespace RTDSimulatorDesktopApp
             frmPreview f = new frmPreview();
             f.txtPayload.Text = ExamplePayload;
             f.ShowDialog();
+        }
+
+        private async void buttonCancel_Click(object sender, EventArgs e)
+        {
+            progressBar1.ForeColor = Color.Yellow;
+            buttonCancel.Enabled = false;
+            _CancellationTokenSource.Cancel();
         }
     }
 }
