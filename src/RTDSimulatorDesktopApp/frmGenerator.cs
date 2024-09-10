@@ -223,9 +223,8 @@ namespace RTDSimulatorDesktopApp
         private void btnPreview_Click(object sender, EventArgs e)
         {
             EventSender s = new EventSender("", "", txtPayload.Text);
-            String ExamplePayload = s.GetPayload(0).ConfigureAwait(false).GetAwaiter().GetResult();
             frmPreview f = new frmPreview();
-            f.txtPayload.Text = ExamplePayload;
+            f.gen = s;
             f.ShowDialog();
         }
 
@@ -234,6 +233,18 @@ namespace RTDSimulatorDesktopApp
             progressBar1.ForeColor = Color.Yellow;
             buttonCancel.Enabled = false;
             _CancellationTokenSource.Cancel();
+        }
+
+        private void frmGenerator_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.F5)
+            {
+                btnRun_Click(sender, e);
+            }
+            if (e.KeyData == Keys.F3)
+            {
+                btnPreview_Click(sender, e);
+            }
         }
     }
 }

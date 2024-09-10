@@ -30,6 +30,7 @@ namespace RTDSimulatorDesktopApp
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGenerator));
             label1 = new Label();
             label2 = new Label();
@@ -59,8 +60,11 @@ namespace RTDSimulatorDesktopApp
             saveAsToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             exitToolStripMenuItem = new ToolStripMenuItem();
+            helpToolStripMenuItem = new ToolStripMenuItem();
+            mnuAbout = new ToolStripMenuItem();
             groupBox2 = new GroupBox();
             btnPreview = new Button();
+            imageList1 = new ImageList(components);
             buttonCancel = new Button();
             lastErrorTextBox = new TextBox();
             groupBox3 = new GroupBox();
@@ -83,16 +87,16 @@ namespace RTDSimulatorDesktopApp
             label1.Name = "label1";
             label1.Size = new Size(157, 15);
             label1.TabIndex = 0;
-            label1.Text = "Endpoint Connection String:";
+            label1.Text = "Endpoint &Connection String:";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new Point(15, 97);
             label2.Name = "label2";
-            label2.Size = new Size(97, 15);
+            label2.Size = new Size(139, 15);
             label2.TabIndex = 1;
-            label2.Text = "EventHub Name:";
+            label2.Text = "&Topic / Event Hub Name:";
             // 
             // txtCnnStr
             // 
@@ -129,7 +133,7 @@ namespace RTDSimulatorDesktopApp
             txtPayload.Multiline = true;
             txtPayload.Name = "txtPayload";
             txtPayload.ScrollBars = ScrollBars.Both;
-            txtPayload.Size = new Size(599, 490);
+            txtPayload.Size = new Size(599, 499);
             txtPayload.TabIndex = 5;
             txtPayload.Text = resources.GetString("txtPayload.Text");
             txtPayload.WordWrap = false;
@@ -139,11 +143,14 @@ namespace RTDSimulatorDesktopApp
             // 
             btnRun.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnRun.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnRun.Location = new Point(900, 515);
+            btnRun.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRun.ImageKey = "Visualpharm-Must-Have-Play.ico";
+            btnRun.ImageList = imageList1;
+            btnRun.Location = new Point(900, 524);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(201, 54);
             btnRun.TabIndex = 6;
-            btnRun.Text = "RUN";
+            btnRun.Text = "RUN (F5)";
             btnRun.UseVisualStyleBackColor = true;
             btnRun.Click += btnRun_Click;
             // 
@@ -206,7 +213,6 @@ namespace RTDSimulatorDesktopApp
             SettingsWaitTimeSec.Size = new Size(81, 29);
             SettingsWaitTimeSec.TabIndex = 19;
             SettingsWaitTimeSec.TextAlign = HorizontalAlignment.Right;
-            SettingsWaitTimeSec.Value = new decimal(new int[] { 5, 0, 0, 0 });
             // 
             // label8
             // 
@@ -215,9 +221,9 @@ namespace RTDSimulatorDesktopApp
             label8.ForeColor = SystemColors.ControlDarkDark;
             label8.Location = new Point(22, 194);
             label8.Name = "label8";
-            label8.Size = new Size(79, 21);
+            label8.Size = new Size(209, 21);
             label8.TabIndex = 18;
-            label8.Text = "Wait time:";
+            label8.Text = "Wait time (between batches):";
             // 
             // SettingsTotalMsgCount
             // 
@@ -271,7 +277,7 @@ namespace RTDSimulatorDesktopApp
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
             statusStrip1.Items.AddRange(new ToolStripItem[] { statusBatches, status, statusTime });
-            statusStrip1.Location = new Point(0, 685);
+            statusStrip1.Location = new Point(0, 694);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1124, 22);
             statusStrip1.TabIndex = 10;
@@ -298,7 +304,7 @@ namespace RTDSimulatorDesktopApp
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { FileMenu });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { FileMenu, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1124, 24);
@@ -349,6 +355,19 @@ namespace RTDSimulatorDesktopApp
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
+            // helpToolStripMenuItem
+            // 
+            helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuAbout });
+            helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            helpToolStripMenuItem.Size = new Size(44, 20);
+            helpToolStripMenuItem.Text = "&Help";
+            // 
+            // mnuAbout
+            // 
+            mnuAbout.Name = "mnuAbout";
+            mnuAbout.Size = new Size(107, 22);
+            mnuAbout.Text = "About";
+            // 
             // groupBox2
             // 
             groupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -365,20 +384,36 @@ namespace RTDSimulatorDesktopApp
             // 
             // btnPreview
             // 
-            btnPreview.Location = new Point(522, 62);
+            btnPreview.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnPreview.ImageAlign = ContentAlignment.MiddleLeft;
+            btnPreview.ImageIndex = 1;
+            btnPreview.ImageList = imageList1;
+            btnPreview.Location = new Point(497, 57);
             btnPreview.Name = "btnPreview";
-            btnPreview.Size = new Size(92, 23);
+            btnPreview.Size = new Size(117, 28);
             btnPreview.TabIndex = 13;
-            btnPreview.Text = "Preview";
+            btnPreview.Text = "Preview (F3)";
             btnPreview.UseVisualStyleBackColor = true;
             btnPreview.Click += btnPreview_Click;
+            // 
+            // imageList1
+            // 
+            imageList1.ColorDepth = ColorDepth.Depth32Bit;
+            imageList1.ImageStream = (ImageListStreamer)resources.GetObject("imageList1.ImageStream");
+            imageList1.TransparentColor = Color.Transparent;
+            imageList1.Images.SetKeyName(0, "Visualpharm-Must-Have-Play.ico");
+            imageList1.Images.SetKeyName(1, "Visualpharm-Must-Have-Preview.ico");
+            imageList1.Images.SetKeyName(2, "Visualpharm-Must-Have-Stop.ico");
             // 
             // buttonCancel
             // 
             buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonCancel.Enabled = false;
             buttonCancel.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonCancel.Location = new Point(693, 515);
+            buttonCancel.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonCancel.ImageKey = "Visualpharm-Must-Have-Stop.ico";
+            buttonCancel.ImageList = imageList1;
+            buttonCancel.Location = new Point(693, 524);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(201, 54);
             buttonCancel.TabIndex = 14;
@@ -396,7 +431,6 @@ namespace RTDSimulatorDesktopApp
             lastErrorTextBox.ScrollBars = ScrollBars.Vertical;
             lastErrorTextBox.Size = new Size(1094, 45);
             lastErrorTextBox.TabIndex = 4;
-            lastErrorTextBox.WordWrap = true;
             // 
             // groupBox3
             // 
@@ -404,7 +438,7 @@ namespace RTDSimulatorDesktopApp
             groupBox3.AutoSize = true;
             groupBox3.Controls.Add(lastErrorTextBox);
             groupBox3.Controls.Add(progressBar1);
-            groupBox3.Location = new Point(12, 575);
+            groupBox3.Location = new Point(12, 584);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(1100, 110);
             groupBox3.TabIndex = 13;
@@ -414,7 +448,7 @@ namespace RTDSimulatorDesktopApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1124, 707);
+            ClientSize = new Size(1124, 716);
             Controls.Add(groupBox3);
             Controls.Add(buttonCancel);
             Controls.Add(btnPreview);
@@ -425,13 +459,16 @@ namespace RTDSimulatorDesktopApp
             Controls.Add(txtPayload);
             Controls.Add(label3);
             Controls.Add(statusStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             MainMenuStrip = menuStrip1;
-            MinimumSize = new Size(1140, 718);
+            MinimumSize = new Size(1140, 755);
             Name = "frmGenerator";
             StartPosition = FormStartPosition.CenterScreen;
             Tag = "Real-Time Data Simulator (for Windows)";
             Text = "Real-Time Data Simulator (for Windows)";
             Load += Form1_Load;
+            KeyUp += frmGenerator_KeyUp;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)SettingsWaitTimeSec).EndInit();
@@ -486,5 +523,8 @@ namespace RTDSimulatorDesktopApp
         private NewProgressBar progressBar1;
         private TextBox lastErrorTextBox;
         private GroupBox groupBox3;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem mnuAbout;
+        private ImageList imageList1;
     }
 }
