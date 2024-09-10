@@ -6,6 +6,13 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Authors>Kamil Nowinski</Authors>
+    <Company>AzurePlayer</Company>
+    <AssemblyVersion>0.4</AssemblyVersion>
+    <FileVersion>0.4</FileVersion>
+    <Copyright>2024</Copyright>
+    <PackageIcon>sc-real-time-computing-stream-computing-512.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Azure-Player/Real-Time-Data-Simulator/</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Update="templates\epexdata.json.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -31,10 +42,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\doc\ico\sc-real-time-computing-stream-computing-512.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
 

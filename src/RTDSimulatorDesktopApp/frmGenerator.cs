@@ -246,5 +246,11 @@ namespace RTDSimulatorDesktopApp
                 btnPreview_Click(sender, e);
             }
         }
+
+        private void mnuAbout_Click(object sender, EventArgs e)
+        {
+            frmAboutApp f = new frmAboutApp();
+            f.ShowDialog();
+        }
     }
 }

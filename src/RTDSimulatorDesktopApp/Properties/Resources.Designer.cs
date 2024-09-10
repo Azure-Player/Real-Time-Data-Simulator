@@ -59,5 +59,15 @@ namespace RTDSimulatorDesktopApp.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sc_real_time_computing_stream_computing_512 {
+            get {
+                object obj = ResourceManager.GetObject("sc-real-time-computing-stream-computing-512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

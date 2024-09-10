@@ -39,6 +39,7 @@ namespace RTDSimulatorDesktopApp
             label3 = new Label();
             txtPayload = new TextBox();
             btnRun = new Button();
+            imageList1 = new ImageList(components);
             progressBar1 = new NewProgressBar();
             label4 = new Label();
             groupBox1 = new GroupBox();
@@ -64,7 +65,6 @@ namespace RTDSimulatorDesktopApp
             mnuAbout = new ToolStripMenuItem();
             groupBox2 = new GroupBox();
             btnPreview = new Button();
-            imageList1 = new ImageList(components);
             buttonCancel = new Button();
             lastErrorTextBox = new TextBox();
             groupBox3 = new GroupBox();
@@ -153,6 +153,15 @@ namespace RTDSimulatorDesktopApp
             btnRun.Text = "RUN (F5)";
             btnRun.UseVisualStyleBackColor = true;
             btnRun.Click += btnRun_Click;
+            // 
+            // imageList1
+            // 
+            imageList1.ColorDepth = ColorDepth.Depth32Bit;
+            imageList1.ImageStream = (ImageListStreamer)resources.GetObject("imageList1.ImageStream");
+            imageList1.TransparentColor = Color.Transparent;
+            imageList1.Images.SetKeyName(0, "Visualpharm-Must-Have-Play.ico");
+            imageList1.Images.SetKeyName(1, "Visualpharm-Must-Have-Preview.ico");
+            imageList1.Images.SetKeyName(2, "Visualpharm-Must-Have-Stop.ico");
             // 
             // progressBar1
             // 
@@ -365,8 +374,9 @@ namespace RTDSimulatorDesktopApp
             // mnuAbout
             // 
             mnuAbout.Name = "mnuAbout";
-            mnuAbout.Size = new Size(107, 22);
+            mnuAbout.Size = new Size(180, 22);
             mnuAbout.Text = "About";
+            mnuAbout.Click += mnuAbout_Click;
             // 
             // groupBox2
             // 
@@ -395,15 +405,6 @@ namespace RTDSimulatorDesktopApp
             btnPreview.Text = "Preview (F3)";
             btnPreview.UseVisualStyleBackColor = true;
             btnPreview.Click += btnPreview_Click;
-            // 
-            // imageList1
-            // 
-            imageList1.ColorDepth = ColorDepth.Depth32Bit;
-            imageList1.ImageStream = (ImageListStreamer)resources.GetObject("imageList1.ImageStream");
-            imageList1.TransparentColor = Color.Transparent;
-            imageList1.Images.SetKeyName(0, "Visualpharm-Must-Have-Play.ico");
-            imageList1.Images.SetKeyName(1, "Visualpharm-Must-Have-Preview.ico");
-            imageList1.Images.SetKeyName(2, "Visualpharm-Must-Have-Stop.ico");
             // 
             // buttonCancel
             // 
