@@ -15,6 +15,7 @@ using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
 using Newtonsoft.Json;
+using Azure.Identity;
 
 namespace RTDSimulatorDesktopApp
 {
@@ -39,7 +40,10 @@ namespace RTDSimulatorDesktopApp
         {
             _payload = payload;
             _connectionString = connectionString;
-            if (!_connectionString.StartsWith("Endpoint=")) { _connectionString = "Endpoint=" + _connectionString; }
+            if (!_connectionString.StartsWith("Endpoint=") && _connectionString.StartsWith("sb://"))
+            { 
+                _connectionString = "Endpoint=" + _connectionString; 
+            }
             _eventHubName = EventhubName;
 
             Variables.Add("UserId", "Random(5000,5100)");
@@ -60,8 +64,16 @@ namespace RTDSimulatorDesktopApp
                     Expressions.Add(m.Value, m.Value.Substring(3, m.Value.Length - 5));
                 }
             }
-
-            _producerClient = new Lazy<EventHubProducerClient>(() => new EventHubProducerClient(_connectionString, _eventHubName));
+                
+            //var a = new EventHubProducerClient("esehblgw02s1xakiex7oj3.servicebus.windows.net", "es_847ab75a-6e5f-478f-8a49-f2f4c78d1ecd", new DefaultAzureCredential());
+            //_producerClient = new Lazy<EventHubProducerClient>(() => new EventHubProducerClient(_connectionString, _eventHubName, new DefaultAzureCredential(true)));
+            //_producerClient = new Lazy<EventHubProducerClient>(() => new EventHubProducerClient("esehblgw02s1xakiex7oj3.servicebus.windows.net", "es_847ab75a-6e5f-478f-8a49-f2f4c78d1ecd", new DefaultAzureCredential(true)));
+            //            var c = new DefaultAzureCredential()
+            
+            //AzureCliCredentialOptions co = new AzureCliCredentialOptions();
+            DefaultAzureCredentialOptions co = new DefaultAzureCredentialOptions();
+            co.TenantId = "f331b859-caa3-4395-bc2d-546406838798";
+            _producerClient = new Lazy<EventHubProducerClient>(() => new EventHubProducerClient(_connectionString, _eventHubName, new DefaultAzureCredential(co)));
         }
 
         ~EventSender()
