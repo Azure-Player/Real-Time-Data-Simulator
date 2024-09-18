@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
+﻿using System.Collections.Concurrent;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
-using System.Windows.Forms;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
-using Newtonsoft.Json;
 using Azure.Identity;
 
 namespace RTDSimulatorDesktopApp
@@ -28,23 +19,17 @@ namespace RTDSimulatorDesktopApp
         public TimeSpan WaitTime = TimeSpan.FromSeconds(0);
 
         string _payload = "";
-        string _connectionString = "sb://";
-        string _eventHubName = "es_";
 
-        private Lazy<EventHubProducerClient> _producerClient;
+        //private Lazy<EventHubProducerClient> _producerClient;
+        private EventHubProducerClient _producerClient;
 
         private Dictionary<string, string> Expressions = new Dictionary<string, string>();
         private ConcurrentDictionary<string, Script<Object>> preCompiledScripts { get; set; } = new ConcurrentDictionary<string, Script<Object>>();
+        private TargetConnection _conn;
 
-        public EventSender(string connectionString, string EventhubName, string payload)
+        public EventSender(string payload)
         {
             _payload = payload;
-            _connectionString = connectionString;
-            if (!_connectionString.StartsWith("Endpoint=") && _connectionString.StartsWith("sb://"))
-            { 
-                _connectionString = "Endpoint=" + _connectionString; 
-            }
-            _eventHubName = EventhubName;
 
             Variables.Add("UserId", "Random(5000,5100)");
             Variables.Add("ProductId", "Random(700,999)");
@@ -64,32 +49,27 @@ namespace RTDSimulatorDesktopApp
                     Expressions.Add(m.Value, m.Value.Substring(3, m.Value.Length - 5));
                 }
             }
-                
-            //var a = new EventHubProducerClient("esehblgw02s1xakiex7oj3.servicebus.windows.net", "es_847ab75a-6e5f-478f-8a49-f2f4c78d1ecd", new DefaultAzureCredential());
-            //_producerClient = new Lazy<EventHubProducerClient>(() => new EventHubProducerClient(_connectionString, _eventHubName, new DefaultAzureCredential(true)));
-            //_producerClient = new Lazy<EventHubProducerClient>(() => new EventHubProducerClient("esehblgw02s1xakiex7oj3.servicebus.windows.net", "es_847ab75a-6e5f-478f-8a49-f2f4c78d1ecd", new DefaultAzureCredential(true)));
-            //            var c = new DefaultAzureCredential()
-            
-            //AzureCliCredentialOptions co = new AzureCliCredentialOptions();
-            DefaultAzureCredentialOptions co = new DefaultAzureCredentialOptions();
-            co.TenantId = "f331b859-caa3-4395-bc2d-546406838798";
-            _producerClient = new Lazy<EventHubProducerClient>(() => new EventHubProducerClient(_connectionString, _eventHubName, new DefaultAzureCredential(co)));
         }
+
+
 
         ~EventSender()
         {
-            if( _producerClient.IsValueCreated)
-            {
-                _producerClient.Value.DisposeAsync().GetAwaiter().GetResult();
-            }
+            //if( _producerClient.IsValueCreated)
+            //{
+            //    _producerClient.DisposeAsync().GetAwaiter().GetResult();
+            //}
         }
 
-        public async Task Send(CancellationToken cancellationToken)
+        public async Task Send(TargetConnection conn, CancellationToken cancellationToken)
         {
+            _conn = conn;
+            _producerClient = conn.Connect();
+
             DateTime nextRun = DateTime.Now;
             for (int batch = 0; batch < BatchesNo; batch++)
             {
-                using EventDataBatch eventBatch = await _producerClient.Value.CreateBatchAsync();
+                using EventDataBatch eventBatch = await _producerClient.CreateBatchAsync();
                 for (int m = 0; m < EventsPerBatch; m++)
                 {
                     if (cancellationToken.IsCancellationRequested)
@@ -105,7 +85,7 @@ namespace RTDSimulatorDesktopApp
                 if (cancellationToken.IsCancellationRequested)
                     return;
 
-                await _producerClient.Value.SendAsync(eventBatch);
+                await _producerClient.SendAsync(eventBatch);
                 OnBatchSent(this, new EventArgs());
 
                 nextRun = DateTime.Now.Add(this.WaitTime);   //Thread.Sleep(WaitTime);

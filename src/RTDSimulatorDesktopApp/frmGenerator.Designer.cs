@@ -64,10 +64,12 @@ namespace RTDSimulatorDesktopApp
             helpToolStripMenuItem = new ToolStripMenuItem();
             mnuAbout = new ToolStripMenuItem();
             groupBox2 = new GroupBox();
+            btnTestCnn = new Button();
             btnPreview = new Button();
-            buttonCancel = new Button();
+            btnCancel = new Button();
             lastErrorTextBox = new TextBox();
             groupBox3 = new GroupBox();
+            btnAzureAuth = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)SettingsWaitTimeSec).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SettingsTotalMsgCount).BeginInit();
@@ -133,7 +135,7 @@ namespace RTDSimulatorDesktopApp
             txtPayload.Multiline = true;
             txtPayload.Name = "txtPayload";
             txtPayload.ScrollBars = ScrollBars.Both;
-            txtPayload.Size = new Size(599, 499);
+            txtPayload.Size = new Size(599, 414);
             txtPayload.TabIndex = 5;
             txtPayload.Text = resources.GetString("txtPayload.Text");
             txtPayload.WordWrap = false;
@@ -146,7 +148,7 @@ namespace RTDSimulatorDesktopApp
             btnRun.ImageAlign = ContentAlignment.MiddleLeft;
             btnRun.ImageKey = "Visualpharm-Must-Have-Play.ico";
             btnRun.ImageList = imageList1;
-            btnRun.Location = new Point(900, 524);
+            btnRun.Location = new Point(900, 447);
             btnRun.Name = "btnRun";
             btnRun.Size = new Size(201, 54);
             btnRun.TabIndex = 6;
@@ -167,7 +169,7 @@ namespace RTDSimulatorDesktopApp
             // 
             progressBar1.Dock = DockStyle.Bottom;
             progressBar1.ForeColor = Color.LawnGreen;
-            progressBar1.Location = new Point(3, 64);
+            progressBar1.Location = new Point(3, 141);
             progressBar1.Margin = new Padding(15, 3, 15, 3);
             progressBar1.Maximum = 1000;
             progressBar1.Name = "progressBar1";
@@ -198,7 +200,7 @@ namespace RTDSimulatorDesktopApp
             groupBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.Location = new Point(643, 279);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(458, 230);
+            groupBox1.Size = new Size(458, 158);
             groupBox1.TabIndex = 9;
             groupBox1.TabStop = false;
             groupBox1.Text = "Publisher settings";
@@ -207,7 +209,7 @@ namespace RTDSimulatorDesktopApp
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F);
-            label9.Location = new Point(407, 196);
+            label9.Location = new Point(407, 118);
             label9.Name = "label9";
             label9.Size = new Size(32, 21);
             label9.TabIndex = 20;
@@ -216,7 +218,7 @@ namespace RTDSimulatorDesktopApp
             // SettingsWaitTimeSec
             // 
             SettingsWaitTimeSec.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            SettingsWaitTimeSec.Location = new Point(320, 194);
+            SettingsWaitTimeSec.Location = new Point(320, 116);
             SettingsWaitTimeSec.Maximum = new decimal(new int[] { 300, 0, 0, 0 });
             SettingsWaitTimeSec.Name = "SettingsWaitTimeSec";
             SettingsWaitTimeSec.Size = new Size(81, 29);
@@ -228,7 +230,7 @@ namespace RTDSimulatorDesktopApp
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
             label8.ForeColor = SystemColors.ControlDarkDark;
-            label8.Location = new Point(22, 194);
+            label8.Location = new Point(22, 116);
             label8.Name = "label8";
             label8.Size = new Size(209, 21);
             label8.TabIndex = 18;
@@ -374,13 +376,15 @@ namespace RTDSimulatorDesktopApp
             // mnuAbout
             // 
             mnuAbout.Name = "mnuAbout";
-            mnuAbout.Size = new Size(180, 22);
+            mnuAbout.Size = new Size(107, 22);
             mnuAbout.Text = "About";
             mnuAbout.Click += mnuAbout_Click;
             // 
             // groupBox2
             // 
             groupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            groupBox2.Controls.Add(btnAzureAuth);
+            groupBox2.Controls.Add(btnTestCnn);
             groupBox2.Controls.Add(label1);
             groupBox2.Controls.Add(txtCnnStr);
             groupBox2.Controls.Add(label2);
@@ -391,6 +395,17 @@ namespace RTDSimulatorDesktopApp
             groupBox2.TabIndex = 12;
             groupBox2.TabStop = false;
             groupBox2.Text = "Destination: EventHub";
+            // 
+            // btnTestCnn
+            // 
+            btnTestCnn.Location = new Point(257, 141);
+            btnTestCnn.Margin = new Padding(3, 2, 3, 2);
+            btnTestCnn.Name = "btnTestCnn";
+            btnTestCnn.Size = new Size(181, 39);
+            btnTestCnn.TabIndex = 4;
+            btnTestCnn.Text = "Test Connection";
+            btnTestCnn.UseVisualStyleBackColor = true;
+            btnTestCnn.Click += btnTestCnn_Click;
             // 
             // btnPreview
             // 
@@ -406,21 +421,21 @@ namespace RTDSimulatorDesktopApp
             btnPreview.UseVisualStyleBackColor = true;
             btnPreview.Click += btnPreview_Click;
             // 
-            // buttonCancel
+            // btnCancel
             // 
-            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonCancel.Enabled = false;
-            buttonCancel.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonCancel.ImageAlign = ContentAlignment.MiddleLeft;
-            buttonCancel.ImageKey = "Visualpharm-Must-Have-Stop.ico";
-            buttonCancel.ImageList = imageList1;
-            buttonCancel.Location = new Point(693, 524);
-            buttonCancel.Name = "buttonCancel";
-            buttonCancel.Size = new Size(201, 54);
-            buttonCancel.TabIndex = 14;
-            buttonCancel.Text = "CANCEL";
-            buttonCancel.UseVisualStyleBackColor = true;
-            buttonCancel.Click += buttonCancel_Click;
+            btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnCancel.Enabled = false;
+            btnCancel.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCancel.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCancel.ImageKey = "Visualpharm-Must-Have-Stop.ico";
+            btnCancel.ImageList = imageList1;
+            btnCancel.Location = new Point(693, 447);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(201, 54);
+            btnCancel.TabIndex = 14;
+            btnCancel.Text = "CANCEL";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
             // 
             // lastErrorTextBox
             // 
@@ -430,7 +445,7 @@ namespace RTDSimulatorDesktopApp
             lastErrorTextBox.Name = "lastErrorTextBox";
             lastErrorTextBox.ReadOnly = true;
             lastErrorTextBox.ScrollBars = ScrollBars.Vertical;
-            lastErrorTextBox.Size = new Size(1094, 45);
+            lastErrorTextBox.Size = new Size(1094, 118);
             lastErrorTextBox.TabIndex = 4;
             // 
             // groupBox3
@@ -439,11 +454,22 @@ namespace RTDSimulatorDesktopApp
             groupBox3.AutoSize = true;
             groupBox3.Controls.Add(lastErrorTextBox);
             groupBox3.Controls.Add(progressBar1);
-            groupBox3.Location = new Point(12, 584);
+            groupBox3.Location = new Point(10, 507);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(1100, 110);
+            groupBox3.Size = new Size(1100, 187);
             groupBox3.TabIndex = 13;
             groupBox3.TabStop = false;
+            // 
+            // btnAzureAuth
+            // 
+            btnAzureAuth.Location = new Point(15, 141);
+            btnAzureAuth.Margin = new Padding(3, 2, 3, 2);
+            btnAzureAuth.Name = "btnAzureAuth";
+            btnAzureAuth.Size = new Size(181, 39);
+            btnAzureAuth.TabIndex = 5;
+            btnAzureAuth.Text = "Azure: Sign in";
+            btnAzureAuth.UseVisualStyleBackColor = true;
+            btnAzureAuth.Click += btnAzureAuth_Click;
             // 
             // frmGenerator
             // 
@@ -451,7 +477,7 @@ namespace RTDSimulatorDesktopApp
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1124, 716);
             Controls.Add(groupBox3);
-            Controls.Add(buttonCancel);
+            Controls.Add(btnCancel);
             Controls.Add(btnPreview);
             Controls.Add(groupBox2);
             Controls.Add(menuStrip1);
@@ -463,7 +489,7 @@ namespace RTDSimulatorDesktopApp
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             MainMenuStrip = menuStrip1;
-            MinimumSize = new Size(1140, 755);
+            MinimumSize = new Size(1140, 753);
             Name = "frmGenerator";
             StartPosition = FormStartPosition.CenterScreen;
             Tag = "Real-Time Data Simulator (for Windows)";
@@ -520,12 +546,14 @@ namespace RTDSimulatorDesktopApp
         private NumericUpDown SettingsWaitTimeSec;
         private Label label8;
         private Button btnPreview;
-        private Button buttonCancel;
+        private Button btnCancel;
         private NewProgressBar progressBar1;
         private TextBox lastErrorTextBox;
         private GroupBox groupBox3;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem mnuAbout;
         private ImageList imageList1;
+        private Button btnTestCnn;
+        private Button btnAzureAuth;
     }
 }

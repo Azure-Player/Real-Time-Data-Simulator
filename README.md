@@ -2,7 +2,7 @@
 Windows Desktop application to generate and stream data into EventHub.
 
 # Screenshot
-<img src='https://pbs.twimg.com/media/GPQ0nj9WkAAlb7O?format=png&name=medium'>
+<img src='.\media\real-time-data-simulator-ver-0.4-main-screen.png'>
 
 # Main Features
 - Configurable target EventHub
@@ -12,10 +12,19 @@ Windows Desktop application to generate and stream data into EventHub.
 - Load/Save payload as a file locally
 - Runtime evaluation of pre-defined variables
 - Runtime evaluation of expression in C# (slower)
+- Microsoft Entra ID (Interactive Browser) Authentication
 
 # Scenarios
 1. Generate dynamic data based on JSON template and send it to Microsoft Fabric EventHub (custom endpoint).
 2. Generate dynamic data based on JSON template and send it to EventHub.
+
+# Configuration
+## Endpoint Connection String
+Example of connection string for **Microsoft Fabric**:
+`Endpoint=sb://esehlnx12nbglyi6y2kwx9.servicebus.windows.net/;SharedAccessKeyName=key_aaee3a28-***;SharedAccessKey=vFX2zae****=;EntityPath=es_5c952fa4-***`
+
+Example of connection string for **Azure Event Hub** (Interactive Browser Authentication):
+`sb://ehplayerdev.servicebus.windows.net/`
 
 # Tokens
 The biggest advantage of the application is the ability to generate value for the tokens listed in the PAYLOAD definition. Data generation takes place on the fly for each message prepared for sending.
@@ -23,6 +32,7 @@ The biggest advantage of the application is the ability to generate value for th
 ## Variables
 Format of a variable: `{{VariableName}}`  
 The following examples depict predefined Variables you can use as Tokens:
+
 |Variable | Generates |
 |--|--|
 | `{{UserId}}` | Numeric (int) value from range 5000-5100 |
