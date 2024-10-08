@@ -2,6 +2,12 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using RTDSimulatorDesktopApp.FormControls;
 using System.Text;
+using System.Data;
+using Azure.Core;
+using Azure.Identity;
+using Microsoft.Graph;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
+using System.Net;
 
 namespace RTDSimulatorDesktopApp
 {
@@ -23,6 +29,8 @@ namespace RTDSimulatorDesktopApp
         private DateTime _StartTime = DateTime.MinValue;
         private DateTime _EndTime = DateTime.MinValue;
         private CancellationTokenSource _CancellationTokenSource;
+        private TargetConnection _conn;
+        private InteractiveBrowserCredential _credential;
 
         public bool IsPayloadChanged
         {
@@ -54,7 +62,9 @@ namespace RTDSimulatorDesktopApp
 
             List<(int, Task)> sendTasks = new List<(int, Task)>();
 
-            EventSender s = new EventSender(txtCnnStr.Text, txtEventHubName.Text, txtPayload.Text);
+            _conn = new TargetConnection(txtCnnStr.Text, txtEventHubName.Text, _credential);
+
+            EventSender s = new EventSender(txtPayload.Text);
             s.OnBatchSent += EventSender_OnBatchSent;
             _CancellationTokenSource = new CancellationTokenSource();
 
@@ -63,21 +73,21 @@ namespace RTDSimulatorDesktopApp
                 s.BatchesNo = (int)SettingsBatchesPerThreadNumber.Value;
                 s.EventsPerBatch = (int)SettingsMsgPerBatchNumber.Value;
                 s.WaitTime = new TimeSpan(0, 0, (int)SettingsWaitTimeSec.Value);
-                sendTasks.Add((i, s.Send(_CancellationTokenSource.Token)));
+                sendTasks.Add((i, s.Send(_conn, _CancellationTokenSource.Token)));
             }
 
             try
             {
-                buttonCancel.Enabled = true;
+                btnCancel.Enabled = true;
                 await Task.WhenAll(sendTasks.Select(x => x.Item2));
                 if (_CancellationTokenSource.IsCancellationRequested)
                 {
-                    buttonCancel.Enabled = false;
+                    btnCancel.Enabled = false;
                     OnCancelled();
                 }
                 else
                 {
-                    buttonCancel.Enabled = false;
+                    btnCancel.Enabled = false;
                     OnCompleted();
                 }
             }
@@ -93,13 +103,18 @@ namespace RTDSimulatorDesktopApp
 
         }
 
+        private void UpdateStatus(string Status)
+        {
+            _EndTime = DateTime.Now;
+            TimeSpan ts = _EndTime - _StartTime;
+            status.Text = $"Status: {Status}.";
+            statusBatches.Text = $"Sent {_MsgSent} messages in {_TotalBatchCount} batches. Total time: {ts:c} (TPS: {(_MsgSent / ts.TotalSeconds):F2})";
+        }
+
         private void OnCompleted()
         {
             progressBar1.Maximum = progressBar1.Value;
-            _EndTime = DateTime.Now;
-            TimeSpan ts = _EndTime - _StartTime;
-            status.Text = $"Status: Completed.";
-            statusTime.Text = $"Sent {_MsgSent} messages in {ts:c}";
+            UpdateStatus("Completed");
             btnRun.Enabled = true;
         }
 
@@ -110,10 +125,7 @@ namespace RTDSimulatorDesktopApp
                 progressBar1.Value = 1;
             }
             progressBar1.Maximum = progressBar1.Value;
-            _EndTime = DateTime.Now;
-            TimeSpan ts = _EndTime - _StartTime;
-            status.Text = $"Status: Cancelled.";
-            statusTime.Text = $"Sent {_MsgSent} messages in {ts:c}";
+            UpdateStatus("Cancelled");
             btnRun.Enabled = true;
         }
 
@@ -124,13 +136,10 @@ namespace RTDSimulatorDesktopApp
                 progressBar1.Value = 1;
             }
             progressBar1.Maximum = progressBar1.Value;
-            _EndTime = DateTime.Now;
-            TimeSpan ts = _EndTime - _StartTime;
-            status.Text = $"Status: Failed.";
-            statusTime.Text = $"Sent {_MsgSent} messages in {ts:c}";
+            UpdateStatus("Failed");
             lastErrorTextBox.Text = errorMessage;
             btnRun.Enabled = true;
-            buttonCancel.Enabled = false;
+            btnCancel.Enabled = false;
         }
 
         private void EventSender_OnBatchSent(object? sender, EventArgs e)
@@ -138,7 +147,8 @@ namespace RTDSimulatorDesktopApp
             progressBar1.Increment(1);
             _BatchSent++;
             _MsgSent += (int)SettingsMsgPerBatchNumber.Value;
-            statusBatches.Text = $"Batches sent: {_BatchSent} / {_TotalBatchCount}";
+            TimeSpan ts = DateTime.Now - _StartTime;
+            statusBatches.Text = $"Batches sent: {_BatchSent} / {_TotalBatchCount} (TPS: {(_MsgSent / ts.TotalSeconds):F2})";
             //https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
         }
 
@@ -222,16 +232,16 @@ namespace RTDSimulatorDesktopApp
 
         private void btnPreview_Click(object sender, EventArgs e)
         {
-            EventSender s = new EventSender("", "", txtPayload.Text);
+            EventSender s = new EventSender(txtPayload.Text);
             frmPreview f = new frmPreview();
             f.gen = s;
             f.ShowDialog();
         }
 
-        private async void buttonCancel_Click(object sender, EventArgs e)
+        private async void btnCancel_Click(object sender, EventArgs e)
         {
             progressBar1.ForeColor = Color.Yellow;
-            buttonCancel.Enabled = false;
+            btnCancel.Enabled = false;
             _CancellationTokenSource.Cancel();
         }
 
@@ -252,5 +262,49 @@ namespace RTDSimulatorDesktopApp
             frmAboutApp f = new frmAboutApp();
             f.ShowDialog();
         }
+
+        private async void btnTestCnn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _conn = new TargetConnection(txtCnnStr.Text, txtEventHubName.Text, _credential);
+                var r = _conn.Connect();
+                lastErrorTextBox.Text = "Connection successful.";
+            }
+            catch (Exception ex)
+            {
+                lastErrorTextBox.Text = ex.ToString();
+            }
+        }
+
+        private void btnAzureAuth_Click(object sender, EventArgs e)
+        {
+            AzureInteractiveAuth().Wait();
+        }
+
+        private async Task AzureInteractiveAuth()
+        {
+            if (_credential == null)
+            {
+                _credential = new InteractiveBrowserCredential();
+            }
+
+            // Define the resource scope you want to access
+            var scope = new[] { "https://graph.microsoft.com/.default" };
+
+            try
+            {
+                // Use the credential to get an access token
+                AccessToken token = await _credential.GetTokenAsync(new TokenRequestContext(scope));
+                lastErrorTextBox.Text = $"Access Token: {token.Token.Substring(0,8)}***";
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions
+                lastErrorTextBox.Text = $"Error: {ex.Message}";
+            }
+        }
+
+
     }
 }
