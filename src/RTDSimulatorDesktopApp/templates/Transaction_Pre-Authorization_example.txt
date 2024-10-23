@@ -1,0 +1,33 @@
+﻿{
+    "transaction_id": "59a2e7c1-9853-4aed-b1a4-f41ab0516b6e",
+    "bond_brand_id": "00000000-0000-0000-0000-000000000000",
+    "customer_id": "0bb749c9-ca8f-4010-950f-071f3667b3fc",
+    "account_id": "73401ad8-ece1-4018-bba4-93c21b451900",
+    "payment_type": "card",
+    "transaction_type": "POS Purchase",
+    "state": "pending",
+    "description": "Pre-Auth Transaction-POS Signature Purchase",
+    "amount": "-4.50",
+    "currency": "USD",
+    "created_time": "2022-08-05T17:22:19+00:00",
+    "updated_time": "2022-08-05T17:22:19+00:00",
+    "balances": {
+        "prior_balance": "-12.00",
+        "new_balance": "-16.50"
+    },
+    "details": {
+        "card_id": "e68adbcc-d76d-47b9-b7c0-d7aa65337f88",
+        "mcc": "5814",
+        "mcc_description": "Fast Food",
+        "currency": "USD",
+        "exchange_rate": "1.00",
+        "merchant_id": "242632000053360",
+        "merchant_name": "Sq *Rising Star Coffee   Cleveland    Ohusa",
+        "merchant_city": "Cleveland    ",
+        "merchant_state": "OH",
+        "merchant_currency": "USD",
+        "merchant_amount": "-4.5",
+        "cardholder_presence": true,
+        "statement_descriptor": "SQ *RISING STAR COFFEE   Cleveland    OHUSA"
+    }
+}
