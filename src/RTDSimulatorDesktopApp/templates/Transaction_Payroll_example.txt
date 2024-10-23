@@ -1,0 +1,23 @@
+﻿{
+    "transaction_id": "b8ef629e-8833-49f5-bf31-94b610b87522",
+    "bond_brand_id": "00000000-0000-0000-0000-000000000000",
+    "customer_id": "a8d9de10-0eb8-476f-8cb9-9a1f99b166b0",
+    "account_id": "12354a17-91c0-4575-849d-e05ded46af5c",
+    "payment_type": "ach",
+    "transaction_type": "External ACH Deposit",
+    "state": "completed",
+    "amount": "50.00",
+    "currency": "USD",
+    "created_time": "2023-03-01T05:45:09.579917+00:00",
+    "updated_time": "2023-03-01T05:45:09.579917+00:00",
+    "details": {
+        "card_id": "6457faff-937e-4f8b-9b22-cd992842da40",
+        "class_code": "PPD",
+        "direction": "credit",
+        "description": "PAYROLL"
+    },
+    "balances": {
+        "prior_balance": "1326.32",
+        "new_balance": "1326.32"
+    }
+}

@@ -12,6 +12,7 @@ namespace RTDSimulatorDesktopApp
 {
     public class EventSender
     {
+        public Int64 BatchSizeInBytes = 0;
         public int messagesCount = 0;
         public int BatchesNo = 1;
         public int EventsPerBatch = 1;
@@ -69,6 +70,7 @@ namespace RTDSimulatorDesktopApp
             DateTime nextRun = DateTime.Now;
             for (int batch = 0; batch < BatchesNo; batch++)
             {
+                BatchSizeInBytes = 0;
                 using EventDataBatch eventBatch = await _producerClient.CreateBatchAsync();
                 for (int m = 0; m < EventsPerBatch; m++)
                 {
@@ -78,6 +80,7 @@ namespace RTDSimulatorDesktopApp
                     string payload = await GetPayload(m);
                     eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes(payload)));
                     messagesCount++;
+                    BatchSizeInBytes += payload.Length;
                 }
 
                 await SleepUntil(nextRun, cancellationToken);

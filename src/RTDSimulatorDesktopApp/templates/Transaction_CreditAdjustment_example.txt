@@ -1,0 +1,32 @@
+﻿{
+    "transaction_id": "af827f08-95cc-423d-95f7-c9f5d1e41587",
+    "bond_brand_id": "00000000-0000-0000-0000-000000000000",
+    "customer_id": "baae67f7-00e6-4e1e-8a08-03d4daad9e43",
+    "account_id": "e14fee38-118b-43db-87db-b9da975a679f",
+    "payment_type": "card",
+    "transaction_type": "Credit Adjustment",
+    "state": "completed",
+    "amount": "11.00",
+    "currency": "USD",
+    "created_time": "2022-01-07T15:39:37+00:00",
+    "updated_time": "2022-01-07T15:39:37+00:00",
+    "balances": {
+        "prior_balance": "17.02",
+        "new_balance": "11.02"
+    },
+    "details": {
+        "card_id": "030bbe79-4272-4b43-8d64-5cd558ed65fa",
+        "mcc": "5999",
+        "mcc_description": "Misc Retail",
+        "currency": "USD",
+        "exchange_rate": "1.0",
+        "merchant_id": "242661000053360",
+        "merchant_name": "Sq *Bond Financial Tec   San Franciscocausa",
+        "merchant_city": "San Francisco",
+        "merchant_state": "CA",
+        "merchant_currency": "USD",
+        "merchant_amount": "11",
+        "cardholder_presence": false,
+        "statement_descriptor": "SQ *BOND FINANCIAL TEC   San FranciscoCAUSA"
+    }
+}

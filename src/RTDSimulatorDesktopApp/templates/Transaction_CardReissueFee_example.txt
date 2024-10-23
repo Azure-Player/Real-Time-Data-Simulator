@@ -1,0 +1,22 @@
+﻿{
+    "transaction_id": "10c2ef09-dd32-4ee5-b8ee-a4613a9c8a96",
+    "bond_brand_id": "3d6a093b-ff34-413d-a7a9-4972f4149bec",
+    "customer_id": "4e04c6e4-0b5a-4ba2-9edc-655f7653fd9f",
+    "account_id": "3bf93342-7264-4e95-b7c9-1ea5682123f6",
+    "payment_type": "card",
+    "transaction_type": "Fee",
+    "state": "completed",
+    "description": "Fee-Reissue Card - From Card Number (51*************8396)",
+    "amount": "-4.99",
+    "currency": "USD",
+    "created_time": "2023-01-02T01:31:14+00:00",
+    "updated_time": "2023-01-02T01:31:14+00:00",
+    "details": {
+        "card_id": "3bc18277-c37d-4684-9004-a9055ced779a",
+        "fee_type": "Reissue Card"
+    },
+    "balances": {
+        "prior_balance": "-4.99",
+        "new_balance": "-4.99"
+    }
+}

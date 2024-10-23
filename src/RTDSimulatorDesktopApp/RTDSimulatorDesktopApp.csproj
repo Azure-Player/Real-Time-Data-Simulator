@@ -8,8 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Authors>Kamil Nowinski</Authors>
     <Company>AzurePlayer</Company>
-    <AssemblyVersion>0.4</AssemblyVersion>
-    <FileVersion>0.4</FileVersion>
+    <AssemblyVersion>0.5</AssemblyVersion>
+    <FileVersion>0.5</FileVersion>
     <Copyright>2024</Copyright>
     <PackageIcon>sc-real-time-computing-stream-computing-512.png</PackageIcon>
     <RepositoryUrl>https://github.com/Azure-Player/Real-Time-Data-Simulator/</RepositoryUrl>
@@ -36,6 +36,33 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="templates\GenerationByFuelType.json.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="templates\Transaction_CardReissueFee_example.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="templates\Transaction_CashWithdrawal_example.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="templates\Transaction_CreditAdjustment_example.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="templates\Transaction_Fee_example.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="templates\Transaction_Payroll_example.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="templates\Transaction_PosPurchase_example.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="templates\Transaction_Pre-Authorization_example.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="templates\Transaction_ProvisionalCredit_example.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="templates\Transaction_PurchaseReturns_example.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

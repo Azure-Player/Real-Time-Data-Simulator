@@ -1,0 +1,32 @@
+﻿{
+   "transaction_id":"03cc5178-243b-42fa-a73a-27000da36e7c",
+   "bond_brand_id":"00000000-0000-0000-0000-000000000000",
+   "customer_id":"35ae74c5-cb4f-4166-b4f4-146caf104973",
+   "account_id":"bdd9154f-2c7a-4834-9184-33791616367c",
+   "payment_type":"card",
+   "transaction_type":"POS Purchase",
+   "state":"completed",
+   "description":"Pre-Auth Transaction-POS Signature Purchase",
+   "amount":"-6.68",
+   "currency":"USD",
+   "created_time":"2022-08-03T20:31:56+00:00",
+   "updated_time":"2022-08-03T20:31:56+00:00",
+   "balances":{
+      "prior_balance":"-397.53",
+      "new_balance":"-397.53"
+   },
+   "details":{
+      "card_id":"aebe6b3a-e9df-42ed-8d71-280d13ef75ec",
+      "mcc":"5542",
+      "mcc_description":"Automatic Fuel Dispenser",
+      "currency":"USD",
+      "exchange_rate":"1.00",
+      "merchant_id":"195000005833001",
+      "merchant_name":"Qt 4134",
+      "merchant_city":"ROUND ROCK",
+      "merchant_state":"TX",
+      "merchant_currency":"USD",
+      "merchant_amount":"-6.68",
+      "statement_descriptor":"QT 4134                  ROUND ROCK   TXUSA"
+   }
+}

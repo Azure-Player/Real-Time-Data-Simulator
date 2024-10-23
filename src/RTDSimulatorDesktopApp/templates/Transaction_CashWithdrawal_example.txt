@@ -1,0 +1,33 @@
+﻿{
+   "transaction_id":"30a2b5a4-c8af-49b3-8272-f9cda6b5654d",
+   "bond_brand_id":"00000000-0000-0000-0000-000000000000",
+   "customer_id":"35ae74c5-cb4f-4166-b4f4-146caf104973",
+   "account_id":"bdd9154f-2c7a-4834-9184-33791616367c",
+   "payment_type":"card",
+   "transaction_type":"Cash Withdrawal",
+   "state":"completed",
+   "description":"Domestic ATM Cash Withdrawal",
+   "amount":"-20.00",
+   "currency":"USD",
+   "created_time":"2022-08-03T20:41:55+00:00",
+   "updated_time":"2022-08-03T20:41:55+00:00",
+   "balances":{
+      "prior_balance":"-358.36",
+      "new_balance":"-383.66"
+   },
+   "details":{
+      "card_id":"aebe6b3a-e9df-42ed-8d71-280d13ef75ec",
+      "mcc":"6011",
+      "mcc_description":"Automated Cash Disbursement - Member Institution",
+      "currency":"USD",
+      "exchange_rate":"1.00",
+      "merchant_id":"TFND/MONEYPASS",
+      "merchant_name":"Transfund",
+      "merchant_city":"ROUND ROCK",
+      "merchant_state":"TX",
+      "merchant_currency":"USD",
+      "merchant_amount":"-20",
+      "cardholder_presence":true,
+      "statement_descriptor":"TRANSFUND                ROUND ROCK   TXUSA"
+   }
+}

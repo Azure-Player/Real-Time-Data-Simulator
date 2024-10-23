@@ -1,0 +1,26 @@
+﻿{
+  "transaction_id": "defa388d-29e3-4d77-a853-80893a09cdb1",
+  "bond_brand_id": "00000000-0000-0000-0000-000000000000",
+  "customer_id": "ea326d41-0d2a-4c3a-9b90-4d18fb410191",
+  "account_id": "670b3035-4c04-4999-985b-b53e14d5146f",
+  "payment_type": "card",
+  "transaction_type": "Provisional Credit",
+  "state": "completed",
+  "description": "Provisional Credit",
+  "amount": "1.21",
+  "fee": "0.00",
+  "currency": "USD",
+  "created_time": "2022-06-16T22:16:57+00:00",
+  "updated_time": "2022-06-16T22:16:57+00:00",
+  "details": {
+    "card_id": "90107917-3b9e-4411-8a1e-b8fcbf17eae9",
+    "mcc": "0",
+    "mcc_description": "Merchant Unknown",
+    "currency": "USD",
+    "exchange_rate": "1.00",
+    "merchant_name": "Usa",
+    "merchant_currency": "USD",
+    "merchant_amount": "1.21",
+    "statement_descriptor": "                                        USA"
+  }
+}

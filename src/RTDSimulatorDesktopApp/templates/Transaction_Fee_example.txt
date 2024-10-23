@@ -1,0 +1,23 @@
+﻿{
+   "transaction_id":"2db09df4-0911-491f-86dd-a200563cffae",
+   "bond_brand_id":"00000000-0000-0000-0000-000000000000",
+   "customer_id":"35ae74c5-cb4f-4166-b4f4-146caf104973",
+   "account_id":"bdd9154f-2c7a-4834-9184-33791616367c",
+   "payment_type":"card",
+   "transaction_type":"Fee",
+   "state":"completed",
+   "description":"Fee of Domestic ATM Cash Withdrawal",
+   "amount":"-0.99",
+   "currency":"USD",
+   "created_time":"2022-07-28T22:05:09+00:00",
+   "updated_time":"2022-07-28T22:05:09+00:00",
+   "balances":{
+      "prior_balance":"-151.91",
+      "new_balance":"-228.04"
+   },
+   "details":{
+      "card_id":"aebe6b3a-e9df-42ed-8d71-280d13ef75ec",
+      "fee_type":"Generic",
+      "linked_transaction_id":"97141e4e-ee2d-47d3-b1ea-40b9a2f74969"
+   }
+}

@@ -1,0 +1,32 @@
+﻿{
+  "transaction_id": "9c80fac3-885d-4534-bbba-3a2598864b9f",
+  "bond_brand_id": "00000000-0000-0000-0000-000000000000",
+  "customer_id": "bf0b1891-cd63-46ef-8c6f-c98f3468af9c",
+  "account_id": "91b9f9af-fdbc-44d0-93df-c68865b525a5",
+  "payment_type": "card",
+  "transaction_type": "Purchase Returns",
+  "state": "completed",
+  "description": "POS Signature Return International (with currency conversion) [European EMU, Euro: 1.28], Fx @1.0312",
+  "amount": "1.32",
+  "currency": "USD",
+  "created_time": "2022-08-14T00:40:27+00:00",
+  "updated_time": "2022-08-14T00:40:27+00:00",
+  "balances": {
+    "prior_balance": "-42.06",
+    "new_balance": "-43.38"
+  },
+  "details": {
+    "card_id": "ab386833-0903-4a03-93b0-49d75bb3e124",
+    "mcc": "5734",
+    "mcc_description": "Computer Software",
+    "currency": "USD",
+    "exchange_rate": "1.03125",
+    "merchant_id": "AWBI8FHJQJHZYIP",
+    "merchant_name": "Stripe Secure",
+    "merchant_city": "LONDON",
+    "merchant_state": "LN",
+    "merchant_currency": "EUR",
+    "merchant_amount": "1.28",
+    "statement_descriptor": "STRIPE SECURE LONDON LNGBR"
+  }
+}
