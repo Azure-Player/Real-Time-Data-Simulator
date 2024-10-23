@@ -26,6 +26,7 @@ namespace RTDSimulatorDesktopApp
         private decimal _TotalBatchCount = 0;
         private int _BatchSent = 0;
         private int _MsgSent = 0;
+        private Int64 _TotalSizeInBytes = 0;
         private DateTime _StartTime = DateTime.MinValue;
         private DateTime _EndTime = DateTime.MinValue;
         private CancellationTokenSource _CancellationTokenSource;
@@ -108,7 +109,7 @@ namespace RTDSimulatorDesktopApp
             _EndTime = DateTime.Now;
             TimeSpan ts = _EndTime - _StartTime;
             status.Text = $"Status: {Status}.";
-            statusBatches.Text = $"Sent {_MsgSent} messages in {_TotalBatchCount} batches. Total time: {ts:c} (TPS: {(_MsgSent / ts.TotalSeconds):F2})";
+            statusBatches.Text = $"Sent {_MsgSent} messages in {_TotalBatchCount} batches. Total time: {ts:c} (TPS: {(_MsgSent / ts.TotalSeconds):F2}) | Bytes sent: {_TotalSizeInBytes:0,0} ({(_TotalSizeInBytes / 1024.0 / ts.TotalSeconds):F2} kbps)";
         }
 
         private void OnCompleted()
@@ -148,7 +149,8 @@ namespace RTDSimulatorDesktopApp
             _BatchSent++;
             _MsgSent += (int)SettingsMsgPerBatchNumber.Value;
             TimeSpan ts = DateTime.Now - _StartTime;
-            statusBatches.Text = $"Batches sent: {_BatchSent} / {_TotalBatchCount} (TPS: {(_MsgSent / ts.TotalSeconds):F2})";
+            _TotalSizeInBytes += ((EventSender)sender).BatchSizeInBytes;
+            statusBatches.Text = $"Batches sent: {_BatchSent} / {_TotalBatchCount} (TPS: {(_MsgSent / ts.TotalSeconds):F2}) | Bytes sent: {_TotalSizeInBytes:0,0} ({(_TotalSizeInBytes / 1024.0 / ts.TotalSeconds):F2} kbps)";
             //https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
         }
 
