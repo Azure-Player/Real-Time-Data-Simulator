@@ -19,6 +19,7 @@ namespace RTDSimulatorDesktopApp
         }
 
         private const string FILES_FILTER = "Text files (*.txt)|*.txt|JSON files (*.json)|*.json|All files (*.*)|*.*";
+        private const Double BytesToMbps = 1024 * 1024 / 8;
 
         private string _FileName = "GenerationByFuelType";
         private bool _IsPayloadChanged = false;
@@ -109,7 +110,7 @@ namespace RTDSimulatorDesktopApp
             _EndTime = DateTime.Now;
             TimeSpan ts = _EndTime - _StartTime;
             status.Text = $"Status: {Status}.";
-            statusBatches.Text = $"Sent {_MsgSent} messages in {_TotalBatchCount} batches. Total time: {ts:c} (TPS: {(_MsgSent / ts.TotalSeconds):F2}) | Bytes sent: {_TotalSizeInBytes:0,0} ({(_TotalSizeInBytes / 1024.0 / ts.TotalSeconds):F2} kbps)";
+            statusBatches.Text = $"Sent {_MsgSent} messages in {_TotalBatchCount} batches. Total time: {ts:c} (TPS: {(_MsgSent / ts.TotalSeconds):F2}) | Bytes sent: {_TotalSizeInBytes:0,0} ({(_TotalSizeInBytes / BytesToMbps / ts.TotalSeconds):F2} Mbps)";
         }
 
         private void OnCompleted()
@@ -150,7 +151,7 @@ namespace RTDSimulatorDesktopApp
             _MsgSent += (int)SettingsMsgPerBatchNumber.Value;
             TimeSpan ts = DateTime.Now - _StartTime;
             _TotalSizeInBytes += ((EventSender)sender).BatchSizeInBytes;
-            statusBatches.Text = $"Batches sent: {_BatchSent} / {_TotalBatchCount} (TPS: {(_MsgSent / ts.TotalSeconds):F2}) | Bytes sent: {_TotalSizeInBytes:0,0} ({(_TotalSizeInBytes / 1024.0 / ts.TotalSeconds):F2} kbps)";
+            statusBatches.Text = $"Batches sent: {_BatchSent} / {_TotalBatchCount} (TPS: {(_MsgSent / ts.TotalSeconds):F2}) | Bytes sent: {_TotalSizeInBytes:0,0} ({(_TotalSizeInBytes / BytesToMbps / ts.TotalSeconds):F2} Mbps)";
             //https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
         }
 

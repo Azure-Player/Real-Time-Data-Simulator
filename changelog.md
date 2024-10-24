@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.5.1] - 2024-10-24
+* Transfer now shows in Mbps (Megabits per second)
+
 ## [0.5.0] - 2024-10-23
 * Added example payloads from https://docs.bond.tech/docs/transaction-payloads #16
 * Added transfer data speed to bottom status pane
