@@ -44,6 +44,13 @@ namespace RTDSimulatorDesktopApp
             }
         }
 
+        private void ResetCounters()
+        {
+            _BatchSent = 0;
+            _MsgSent = 0;
+            _StartTime = DateTime.Now;
+            _TotalSizeInBytes = 0;
+        }
 
         private async void btnRun_Click(object sender, EventArgs e)
         {
@@ -54,9 +61,7 @@ namespace RTDSimulatorDesktopApp
             btnRun.Enabled = false;
             progressBar1.Maximum = (int)_TotalBatchCount;
             progressBar1.Value = 0;
-            _BatchSent = 0;
-            _MsgSent = 0;
-            _StartTime = DateTime.Now;
+            ResetCounters();
 
             statusBatches.Text = $"Batches sent: {_BatchSent} / {_TotalBatchCount}";
             status.Text = "Status: In Progress...";

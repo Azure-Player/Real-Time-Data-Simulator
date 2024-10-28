@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.5.2] - 2024-10-28
+* Fixed: Reset `_TotalSizeInBytes` counter before each run to avoid overpriced Mbps after the first run
+
 ## [0.5.1] - 2024-10-24
 * Transfer now shows in Mbps (Megabits per second)
 
