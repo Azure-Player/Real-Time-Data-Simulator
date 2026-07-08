@@ -1,6 +1,7 @@
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using RTDSimulatorDesktopApp.FormControls;
+using System.ComponentModel;
 using System.Text;
 using System.Data;
 using Azure.Core;
@@ -34,6 +35,7 @@ namespace RTDSimulatorDesktopApp
         private TargetConnection _conn;
         private InteractiveBrowserCredential _credential;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool IsPayloadChanged
         {
             get { return _IsPayloadChanged; }
